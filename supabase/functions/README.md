@@ -1,0 +1,1 @@
+Sin Edge Functions todavia.
