@@ -1,3 +1,8 @@
 name = "merkaba-portal"
 main = "worker.js"
 compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "merkaba-kit"
+database_id = "c241ad04-7fb4-47bf-b26d-5ff00ea362c0"

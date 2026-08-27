@@ -245,11 +245,14 @@ select.fld-select{padding:8px 11px;border:1px solid var(--border);border-radius:
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SB_URL = 'https://rdmqlclavqbhrhxbkiwo.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkbXFsY2xhdnFiaHJoeGJraXdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NTQyMTUsImV4cCI6MjA5NzAzMDIxNX0.y06LLkP2TuyffScZl-rGNsl1pMLtpqYSisBG8-t727Q';
-const sb = window.supabase.createClient(SB_URL, SB_KEY);
+const API_URL = '';
+async function apiPost(path, body){
+  const r = await fetch(API_URL+path, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)});
+  const data = await r.json().catch(function(){ return null; });
+  if(r.status===401) return {data:null, error:'Unauthorized'};
+  return {data:data, error:null};
+}
 const DEMO_CLIENTE_ID = '033a71aa-b53c-450f-b0e7-332c7ec25b01';
 let APWD = '';
 
@@ -276,7 +279,7 @@ function adminLogout(){
 let CLIENTES = [];
 
 async function cargarClientes(){
-  const {data,error}=await sb.rpc('admin_list_clientes',{admin_pwd:APWD});
+  const {data,error}=await apiPost('/api/admin/list',{admin_pwd:APWD});
   if(error) return false;
   CLIENTES = (data||[]).slice().sort(function(a,b){
     if(a.id===DEMO_CLIENTE_ID) return -1;
@@ -391,7 +394,7 @@ async function guardarEdicion(id){
   const whatsapp=document.getElementById('ed-whatsapp-'+id).value.trim();
   const email=document.getElementById('ed-email-'+id).value.trim();
   if(!nombre||!pwd){ alert('Nombre y contrasena no pueden quedar vacios.'); return; }
-  const {data,error}=await sb.rpc('admin_update_cliente',{admin_pwd:APWD,p_id:id,p_nombre:nombre,p_password:pwd,p_ciudad:ciudad,p_whatsapp:whatsapp,p_email:email});
+  const {data,error}=await apiPost('/api/admin/update',{admin_pwd:APWD,p_id:id,p_nombre:nombre,p_password:pwd,p_ciudad:ciudad,p_whatsapp:whatsapp,p_email:email});
   if(error||!data||!data.ok){ alert('No se pudo guardar los cambios.'); return; }
   cargarClientes();
 }
@@ -407,7 +410,7 @@ async function agregarCliente(){
   const whatsapp=document.getElementById('nuevo-whatsapp').value.trim();
   const email=document.getElementById('nuevo-email').value.trim();
   const plan=document.getElementById('nuevo-plan').value;
-  const {data,error}=await sb.rpc('admin_add_cliente',{admin_pwd:APWD,p_nombre:nombre,p_password:pwd,p_ciudad:ciudad,p_whatsapp:whatsapp,p_email:email,p_plan:plan});
+  const {data,error}=await apiPost('/api/admin/add',{admin_pwd:APWD,p_nombre:nombre,p_password:pwd,p_ciudad:ciudad,p_whatsapp:whatsapp,p_email:email,p_plan:plan});
   btn.disabled=false; btn.textContent='Agregar';
   if(error||!data||!data.ok){ msg.className='form-msg err'; msg.textContent='Error al agregar.'; return; }
   msg.className='form-msg ok'; msg.textContent='Cliente agregado.';
@@ -425,7 +428,7 @@ async function cambiarPlan(btn){
   const actual=btn.classList.contains('completo')?'completo':'basico';
   const nuevo=actual==='completo'?'basico':'completo';
   if(!confirm('Cambiar el plan a "'+(nuevo==='completo'?'Profesional':'Esencial')+'"?')) return;
-  const {data,error}=await sb.rpc('admin_set_plan',{admin_pwd:APWD,p_id:btn.dataset.id,p_plan:nuevo});
+  const {data,error}=await apiPost('/api/admin/set-plan',{admin_pwd:APWD,p_id:btn.dataset.id,p_plan:nuevo});
   if(error||!data||!data.ok) return;
   btn.className='plan-badge '+data.plan;
   btn.textContent=data.plan==='completo'?'Profesional':'Esencial';
@@ -433,12 +436,12 @@ async function cambiarPlan(btn){
 
 async function cambiarRegalos(sel){
   const cantidad=parseInt(sel.value,10);
-  const {data,error}=await sb.rpc('admin_set_regalos',{admin_pwd:APWD,p_id:sel.dataset.id,p_cantidad:cantidad});
+  const {data,error}=await apiPost('/api/admin/set-regalos',{admin_pwd:APWD,p_id:sel.dataset.id,p_cantidad:cantidad});
   if(error||!data||!data.ok){ alert('No se pudo guardar.'); return; }
 }
 
 async function toggleActivo(btn){
-  const {data,error}=await sb.rpc('admin_toggle_activo',{admin_pwd:APWD,p_id:btn.dataset.id});
+  const {data,error}=await apiPost('/api/admin/toggle-activo',{admin_pwd:APWD,p_id:btn.dataset.id});
   if(error||!data) return;
   btn.className='btn-toggle '+(data.activo?'activo':'inactivo');
   btn.textContent=data.activo?'Activo':'Inactivo';
@@ -446,7 +449,7 @@ async function toggleActivo(btn){
 
 async function eliminarCliente(btn){
   if(!confirm('Eliminar a '+btn.dataset.nombre+'?\nEsta accion no se puede deshacer.')) return;
-  const {data,error}=await sb.rpc('admin_delete_cliente',{admin_pwd:APWD,p_id:btn.dataset.id});
+  const {data,error}=await apiPost('/api/admin/delete',{admin_pwd:APWD,p_id:btn.dataset.id});
   if(!error&&data&&data.ok) cargarClientes();
 }
 
@@ -480,7 +483,7 @@ function cambiarFotoDemo(id, input){
   const reader = new FileReader();
   reader.onload = function(e){
     _normalizeAvatarPhoto(e.target.result, async function(fotoCircular){
-      const {error} = await sb.rpc('client_update_profile',{p_id:id,p_nombre:cliente.nombre,p_ciudad:cliente.ciudad||'',p_whatsapp:cliente.whatsapp||'',p_email:cliente.email||'',p_foto:fotoCircular});
+      const {error} = await apiPost('/api/client-update-profile',{p_id:id,p_nombre:cliente.nombre,p_ciudad:cliente.ciudad||'',p_whatsapp:cliente.whatsapp||'',p_email:cliente.email||'',p_foto:fotoCircular});
       if(error){ alert('No se pudo cambiar la foto.'); return; }
       cargarClientes();
     });

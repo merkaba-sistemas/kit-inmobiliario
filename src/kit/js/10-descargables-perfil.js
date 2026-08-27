@@ -1,7 +1,7 @@
 
 // ══════════════════════════════════════════════
 // PERFIL DEL AGENTE
-// (SB_URL y SB_KEY viven en 01-config.js)
+// (API_URL vive en 01-config.js)
 
 var _temaSeleccionado = null;
 var _temaOriginal = null;
@@ -108,7 +108,7 @@ function cargarFoto(input){
       }
       $('photo-ring-preview').innerHTML = '<img src="'+fotoCircular+'" alt="foto"/>';
       const id = localStorage.getItem('mk_id'); if(!id) return;
-      try{ await fetch(SB_URL+'/rest/v1/rpc/client_update_profile',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({p_id:id,p_nombre:localStorage.getItem('mk_nombre')||''  ,p_ciudad:localStorage.getItem('mk_ciudad')||''  ,p_whatsapp:localStorage.getItem('mk_whatsapp')||''  ,p_email:localStorage.getItem('mk_email')||''  ,p_foto:fotoCircular})}); }catch(e){}
+      try{ await fetch(API_URL+'/api/client-update-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({p_id:id,p_nombre:localStorage.getItem('mk_nombre')||''  ,p_ciudad:localStorage.getItem('mk_ciudad')||''  ,p_whatsapp:localStorage.getItem('mk_whatsapp')||''  ,p_email:localStorage.getItem('mk_email')||''  ,p_foto:fotoCircular})}); }catch(e){}
     });
   };
   reader.readAsDataURL(file);
@@ -129,12 +129,12 @@ async function guardarPerfil(){
   const tema = _temaSeleccionado || AGENTE.tema;
   if(!AGENTE.esDemo){
     try {
-      await fetch(SB_URL+'/rest/v1/rpc/client_update_profile', {
+      await fetch(API_URL+'/api/client-update-profile', {
         method:'POST',
-        headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
+        headers:{'Content-Type':'application/json'},
         body:JSON.stringify({p_id:id, p_nombre:nombre, p_ciudad:ciudad, p_whatsapp:whatsapp, p_email:email, p_foto:localStorage.getItem('mk_foto')||null, p_tema:tema})
       });
-    } catch(e){ console.warn('Supabase update skipped'); }
+    } catch(e){ console.warn('Backend update skipped'); }
   }
   localStorage.setItem('mk_nombre', nombre);
   localStorage.setItem('mk_ciudad', ciudad);

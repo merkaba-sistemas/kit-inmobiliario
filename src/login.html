@@ -404,8 +404,7 @@ footer{padding:18px clamp(20px,5vw,60px);border-top:1px solid var(--border);disp
 
   if(sessionStorage.getItem("mk_auth")==="1"){ window.location.replace("/kit-inmobiliario"); }
 
-  const SB_URL = 'https://rdmqlclavqbhrhxbkiwo.supabase.co';
-  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkbXFsY2xhdnFiaHJoeGJraXdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NTQyMTUsImV4cCI6MjA5NzAzMDIxNX0.y06LLkP2TuyffScZl-rGNsl1pMLtpqYSisBG8-t727Q';
+  const API_URL = '';
 
   async function verificar(){
     const val = document.getElementById('pw-input').value.trim();
@@ -415,9 +414,9 @@ footer{padding:18px clamp(20px,5vw,60px);border-top:1px solid var(--border);disp
     btn.textContent = 'Verificando...';
     btn.disabled = true;
     try {
-      const res = await fetch(SB_URL + '/rest/v1/rpc/verify_password', {
+      const res = await fetch(API_URL + '/api/verify-password', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pwd: val })
       });
       const data = await res.json();

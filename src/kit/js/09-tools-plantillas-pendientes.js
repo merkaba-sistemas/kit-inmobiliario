@@ -338,17 +338,17 @@ function renderSeguimientosLista(){
 async function sbSavePlantillas(arr){
   if(AGENTE.esDemo) return;
   const id = localStorage.getItem('mk_id'); if(!id) return;
-  try{ await fetch(SB_URL+'/rest/v1/rpc/save_plantillas',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({p_id:id,p_plantillas:arr})}); }catch(e){}
+  try{ await fetch(API_URL+'/api/save-plantillas',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({p_id:id,p_plantillas:arr})}); }catch(e){}
 }
 async function sbSavePendientes(arr){
   if(AGENTE.esDemo) return;
   const id = localStorage.getItem('mk_id'); if(!id) return;
-  try{ await fetch(SB_URL+'/rest/v1/rpc/save_pendientes',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({p_id:id,p_pendientes:arr})}); }catch(e){}
+  try{ await fetch(API_URL+'/api/save-pendientes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({p_id:id,p_pendientes:arr})}); }catch(e){}
 }
 async function sbSaveSeguimientos(arr){
   if(AGENTE.esDemo) return;
   const id = localStorage.getItem('mk_id'); if(!id) return;
-  try{ await fetch(SB_URL+'/rest/v1/rpc/save_seguimientos',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({p_id:id,p_seguimientos:arr})}); }catch(e){}
+  try{ await fetch(API_URL+'/api/save-seguimientos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({p_id:id,p_seguimientos:arr})}); }catch(e){}
 }
 
 // 17. DESCARGABLES (placeholder hasta tener los archivos reales)
