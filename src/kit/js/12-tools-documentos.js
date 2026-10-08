@@ -81,7 +81,7 @@ function buildComisionHTML(precio, pct, comUSD, comBs, neto, tc){
   ];
   var rowsHtml = rows.map(function(r,i){
     var bg = i%2===0?'#f8f9fc':'#fff';
-    return '<tr style="background:'+bg+'"><td style="padding:11px 16px;color:#4a5568;font-size:0.88rem;">'+r[0]+'</td><td style="padding:11px 16px;text-align:right;font-size:0.88rem;">'+r[1]+'</td></tr>';
+    return '<tr style="background:'+bg+'"><td style="padding:11px 16px;color:#4a5568;font-size:0.88rem;">'+r[0]+'</td><td style="padding:11px 16px;text-align:right;font-size:0.88rem;color:var(--pdf-navy);">'+r[1]+'</td></tr>';
   }).join('');
   var fecha = new Date().toLocaleDateString('es-BO',{day:'2-digit',month:'long',year:'numeric'});
   return DOC_INICIO
@@ -117,7 +117,7 @@ function buildAntictreticoHTML(capital, anos, comPct, tc, alquiler, capBs, comUS
   ];
   var rowsHtml = rows.map(function(r,i){
     var bg = i%2===0?'#f8f9fc':'#fff';
-    return '<tr style="background:'+bg+'"><td style="padding:11px 16px;color:#4a5568;font-size:0.88rem;">'+r[0]+'</td><td style="padding:11px 16px;text-align:right;font-size:0.88rem;">'+r[1]+'</td></tr>';
+    return '<tr style="background:'+bg+'"><td style="padding:11px 16px;color:#4a5568;font-size:0.88rem;">'+r[0]+'</td><td style="padding:11px 16px;text-align:right;font-size:0.88rem;color:var(--pdf-navy);">'+r[1]+'</td></tr>';
   }).join('');
   return DOC_INICIO
     +_agentHeaderHTML()
@@ -142,7 +142,7 @@ function buildAntictreticoHTML(capital, anos, comPct, tc, alquiler, capBs, comUS
 function buildComparadorHTML(props){
   var cols = props.map(function(p){ return '<th style="padding:11px 14px;text-align:center;font-size:0.82rem;">'+esc(p.nombre||'Propiedad')+'</th>'; }).join('');
   var rows = [
-    {label:'Precio (USD)', fn:function(p){ return p.precio?'<strong>$ '+p.precio.toLocaleString('es-BO')+'</strong>':'—'; }},
+    {label:'Precio (USD)', fn:function(p){ return p.precio?'<strong style="color:var(--pdf-navy);">$ '+p.precio.toLocaleString('es-BO')+'</strong>':'—'; }},
     {label:'Zona', fn:function(p){ return p.zona?esc(p.zona):'—'; }},
     {label:'Superficie', fn:function(p){ return p.m2?p.m2+' m&sup2;':'—'; }},
     {label:'Precio por m&sup2;', fn:function(p){ return (p.precio&&p.m2)?'$ '+(p.precio/p.m2).toFixed(0)+'/m&sup2;':'—'; }},
@@ -155,7 +155,7 @@ function buildComparadorHTML(props){
   var rowsHtml = rows.map(function(r,i){
     var bg = i%2===0?'#f8f9fc':'#fff';
     var vals = props.map(r.fn);
-    return '<tr style="background:'+bg+'"><td style="padding:10px 14px;font-weight:600;color:var(--pdf-navy);font-size:0.85rem;">'+r.label+'</td>'+vals.map(function(v){ return '<td style="padding:10px 14px;text-align:center;font-size:0.85rem;">'+v+'</td>'; }).join('')+'</tr>';
+    return '<tr style="background:'+bg+'"><td style="padding:10px 14px;font-weight:600;color:var(--pdf-navy);font-size:0.85rem;">'+r.label+'</td>'+vals.map(function(v){ return '<td style="padding:10px 14px;text-align:center;font-size:0.85rem;color:#2d3748;">'+v+'</td>'; }).join('')+'</tr>';
   }).join('');
   var recomendacion = _recomendacionComparador(props);
   var recomendacionHtml = recomendacion
