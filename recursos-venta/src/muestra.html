@@ -185,7 +185,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
       <div class="mp-header">
         <div>
           <div class="mp-name" id="mp-name">Plan Esencial</div>
-          <div class="mp-price" id="mp-price">Bs 250<span>pago único</span></div>
+          <div class="mp-price" id="mp-price">USD 80<span>mensual</span></div>
         </div>
         <button class="btn-qr" style="flex-shrink:0;width:auto;padding:9px 12px;font-size:0.78rem;" onclick="irAPagarPlan()">📲 Pagar con QR</button>
       </div>
@@ -197,7 +197,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
       <p class="pay-sub">Escaneá, pagá, y mandanos el comprobante.</p>
       <div class="qr-frame" onclick="abrirZoomQR()" title="Tocar para agrandar"><img id="qr-img" src="" alt="Codigo QR de pago"></div>
       <a class="qr-descarga" id="qr-descarga-link" href="#" download="qr-pago.jpg">⬇️ Descargar QR</a>
-      <span class="monto-chip" id="qr-monto">Bs 250</span>
+      <span class="monto-chip" id="qr-monto">USD 80</span>
       <ol class="steps">
         <li><span class="step-num">1</span> Escaneá el código con la app de tu banco y pagá.</li>
         <li>
@@ -832,8 +832,8 @@ function planCard(nombre, precio, destacado, desglose, bullets, leadText, mensaj
     + bullets.map(function(b){ return '<li>'+esc(b)+'</li>'; }).join('');
   return '<div class="plan-card'+(destacado?' destacado':'')+'">'
     + '<div class="plan-nombre">'+esc(nombre)+'</div>'
-    + '<div class="plan-precio">Bs '+precio+'</div>'
-    + '<div class="plan-badge">♾️ Pago único</div>'
+    + '<div class="plan-precio">'+precio+'</div>'
+    + '<div class="plan-badge">🔁 Mensual</div>'
     + '<div class="plan-actions">'
     +   '<a class="btn btn-outline plan-btn" style="flex:1;text-align:center;" href="'+wa+'" target="_blank" rel="noopener">Elegir '+esc(nombre)+'</a>'
     +   '<button class="btn-qr" onclick="pagarPlan(\''+planId+'\')">📲 Pagar con QR</button>'
@@ -851,10 +851,10 @@ function renderPlanes(){
   var msgEsencial = 'Hola! Vi la muestra gratis y quiero el Plan Esencial del Kit del Agente Inmobiliario.';
   $('planes').innerHTML =
     '<div class="planes-title">¿Te gustó? Es solo 1 de las 25 herramientas entre el Plan Esencial y el Plan Profesional</div>'
-    + '<div class="planes-sub">Pago único, sin mensualidades</div>'
+    + '<div class="planes-sub">Suscripción mensual</div>'
     + '<div class="planes-grid">'
-    + planCard('Plan Profesional', '350', true, DESGLOSE.profesional, BULLETS_PROFESIONAL, 'Todo lo del plan Esencial, más:', msgProfesional, 'Profesional')
-    + planCard('Plan Esencial', '250', false, DESGLOSE.esencial, BULLETS_ESENCIAL, '', msgEsencial, 'Esencial')
+    + planCard('Plan Profesional', 'USD 120/mes', true, DESGLOSE.profesional, BULLETS_PROFESIONAL, 'Todo lo del plan Esencial, más:', msgProfesional, 'Profesional')
+    + planCard('Plan Esencial', 'USD 80/mes', false, DESGLOSE.esencial, BULLETS_ESENCIAL, '', msgEsencial, 'Esencial')
     + '</div>';
   buildTrack('track-planprofesional', DESGLOSE.profesional);
   buildTrack('track-planesencial', DESGLOSE.esencial);
@@ -868,11 +868,11 @@ var _mkPlanModalOpen = false;
 
 function abrirPlanModal(plan){
   _planActualPago = plan;
-  var precio = plan === 'Profesional' ? '350' : '250';
+  var precio = plan === 'Profesional' ? 'USD 120' : 'USD 80';
   var bullets = plan === 'Profesional' ? BULLETS_PROFESIONAL : BULLETS_ESENCIAL;
   var lead = plan === 'Profesional' ? 'Todo lo del plan Esencial, más:' : '';
   $('mp-name').textContent = 'Plan ' + plan;
-  $('mp-price').innerHTML = 'Bs ' + precio + '<span>pago único</span>';
+  $('mp-price').innerHTML = precio + '<span>mensual</span>';
   $('mp-list').innerHTML = (lead ? '<li class="lead">'+esc(lead)+'</li>' : '') + bullets.map(function(b){ return '<li>'+esc(b)+'</li>'; }).join('');
   $('view-features').hidden = false;
   $('view-pay').hidden = true;
@@ -905,11 +905,11 @@ function pagarPlan(plan){
 }
 function irAPagarPlan(){
   var plan = _planActualPago;
-  var precio = plan === 'Profesional' ? 'Bs 350' : 'Bs 250';
+  var precio = plan === 'Profesional' ? 'USD 120' : 'USD 80';
   var src = plan === 'Profesional' ? '/icons/qr-profesional.jpg' : '/icons/qr-esencial.jpg';
   var msg = plan === 'Profesional'
-    ? 'Hola! Ya pagué el Plan Profesional (Bs 350) del kit del agente inmobiliario. Te mando el comprobante.'
-    : 'Hola! Ya pagué el Plan Esencial (Bs 250) del kit del agente inmobiliario. Te mando el comprobante.';
+    ? 'Hola! Ya pagué el Plan Profesional (USD 120) del kit del agente inmobiliario. Te mando el comprobante.'
+    : 'Hola! Ya pagué el Plan Esencial (USD 80) del kit del agente inmobiliario. Te mando el comprobante.';
   $('pay-titulo').textContent = 'Pagá el Plan ' + plan;
   $('qr-monto').textContent = precio;
   $('qr-img').src = src;
@@ -985,8 +985,8 @@ function empezarHerramienta(){
     ? '<div class="nombre-box"><label>Tu nombre (aparece en el resultado)</label><input type="text" id="mk-nombre-input" placeholder="Ej: Juan Pérez" oninput="actualizarNombre()"/>'
       + '<p style="font-size:0.8rem;color:var(--text-muted);margin:12px 0 8px;line-height:1.5;">¿Quieres agregar también tu foto, tu celular y tu correo? Eso ya es parte de un plan pago. Elige uno para ver qué incluye y pagar:</p>'
       + '<div class="plan-cta-row">'
-      +   '<button class="plan-cta" onclick="abrirPlanModal(\'Esencial\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Esencial <span class="plan-cta-price">· Bs 250</span></div></button>'
-      +   '<button class="plan-cta" onclick="abrirPlanModal(\'Profesional\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Profesional <span class="plan-cta-price">· Bs 350</span></div></button>'
+      +   '<button class="plan-cta" onclick="abrirPlanModal(\'Esencial\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Esencial <span class="plan-cta-price">· USD 80</span></div></button>'
+      +   '<button class="plan-cta" onclick="abrirPlanModal(\'Profesional\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Profesional <span class="plan-cta-price">· USD 120</span></div></button>'
       + '</div>'
       + '</div>'
     : '';

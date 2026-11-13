@@ -6,7 +6,7 @@
 // ══════════════════════════════════════════════
 var PLANES_KIT = {
   'Esencial': {
-    precio: 'Bs 250',
+    precio: 'USD 80',
     lista: [
       'Calculadora de comisión','Calculadora tipo de cambio','Respuesta rápida al lead',
       'Generador de seguimiento','Mensaje post-venta','Checklist de visita','Checklist anticrético',
@@ -15,7 +15,7 @@ var PLANES_KIT = {
     ]
   },
   'Profesional': {
-    precio: 'Bs 350',
+    precio: 'USD 120',
     lista: [
       '__LEAD__Todo lo del plan Esencial, más:',
       'Propuesta al propietario','Acuerdo de trabajo','Manejador de objeciones','Comparador de inmuebles',
@@ -29,8 +29,8 @@ var QR_SRC_KIT = {
   'Profesional': '/icons/qr-profesional.jpg'
 };
 var QR_WA_MSG_KIT = {
-  'Esencial': 'Hola! Ya pagué el Plan Esencial (Bs 250) del kit del agente inmobiliario. Te mando el comprobante.',
-  'Profesional': 'Hola! Ya pagué el Plan Profesional (Bs 350) del kit del agente inmobiliario. Te mando el comprobante.'
+  'Esencial': 'Hola! Ya pagué el Plan Esencial (USD 80) del kit del agente inmobiliario. Te mando el comprobante.',
+  'Profesional': 'Hola! Ya pagué el Plan Profesional (USD 120) del kit del agente inmobiliario. Te mando el comprobante.'
 };
 var _planActualPago = 'Esencial';
 
@@ -65,7 +65,7 @@ function abrirPlanModal(plan){
   _planActualPago = plan;
   var p = PLANES_KIT[plan];
   $('mp-name').textContent = 'Plan ' + plan;
-  $('mp-price').innerHTML = p.precio + '<span>pago único</span>';
+  $('mp-price').innerHTML = p.precio + '<span>mensual</span>';
   $('mp-list').innerHTML = p.lista.map(function(item){
     if(item.indexOf('__LEAD__') === 0) return '<li class="lead">' + esc(item.replace('__LEAD__','')) + '</li>';
     return '<li>' + esc(item) + '</li>';
@@ -114,7 +114,7 @@ function mostrarBloqueoPerfil(texto){
   msg.style.color = '';
   msg.innerHTML = '<p style="margin:0 0 10px;color:var(--text-muted);font-size:0.82rem;">' + esc(texto) + '</p>'
     + '<div class="plan-cta-row">'
-    +   '<button class="plan-cta" type="button" onclick="_cerrarPerfilUI();abrirPlanModal(\'Esencial\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Esencial <span class="plan-cta-price">· Bs 250</span></div></button>'
-    +   '<button class="plan-cta" type="button" onclick="_cerrarPerfilUI();abrirPlanModal(\'Profesional\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Profesional <span class="plan-cta-price">· Bs 350</span></div></button>'
+    +   '<button class="plan-cta" type="button" onclick="_cerrarPerfilUI();abrirPlanModal(\'Esencial\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Esencial <span class="plan-cta-price">· USD 80</span></div></button>'
+    +   '<button class="plan-cta" type="button" onclick="_cerrarPerfilUI();abrirPlanModal(\'Profesional\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Profesional <span class="plan-cta-price">· USD 120</span></div></button>'
     + '</div>';
 }

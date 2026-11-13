@@ -81,11 +81,11 @@
     <div class="plan-cta-row" style="margin-bottom:10px;">
       <button class="plan-cta" onclick="document.getElementById('demo-info-modal').classList.remove('open');abrirPlanModal('Esencial');">
         <div class="plan-cta-lbl">Ver y pagar</div>
-        <div class="plan-cta-name">Esencial <span class="plan-cta-price">· Bs 250</span></div>
+        <div class="plan-cta-name">Esencial <span class="plan-cta-price">· USD 80</span></div>
       </button>
       <button class="plan-cta" onclick="document.getElementById('demo-info-modal').classList.remove('open');abrirPlanModal('Profesional');">
         <div class="plan-cta-lbl">Ver y pagar</div>
-        <div class="plan-cta-name">Profesional <span class="plan-cta-price">· Bs 350</span></div>
+        <div class="plan-cta-name">Profesional <span class="plan-cta-price">· USD 120</span></div>
       </button>
     </div>
     <button class="btn btn-outline" style="width:100%;" onclick="cerrarModalDemo()">Entendido</button>
@@ -100,7 +100,7 @@
       <div class="mp-header">
         <div>
           <div class="mp-name" id="mp-name">Plan Esencial</div>
-          <div class="mp-price" id="mp-price">Bs 250<span>pago único</span></div>
+          <div class="mp-price" id="mp-price">USD 80<span>mensual</span></div>
         </div>
         <button class="btn-pay-header" onclick="irAPagarPlan()">📲 Pagar con QR</button>
       </div>
@@ -112,7 +112,7 @@
       <p class="pay-sub">Escaneá, pagá, y mandanos el comprobante.</p>
       <div class="qr-frame" onclick="abrirZoomQR()" title="Tocar para agrandar"><img id="qr-img" src="" alt="Codigo QR de pago"></div>
       <a class="qr-descarga" id="qr-descarga-link" href="#" download="qr-pago.jpg">⬇️ Descargar QR</a>
-      <span class="monto-chip" id="qr-monto">Bs 250</span>
+      <span class="monto-chip" id="qr-monto">USD 80</span>
       <ol class="steps">
         <li><span class="step-num">1</span> Escaneá el código con la app de tu banco y pagá.</li>
         <li>

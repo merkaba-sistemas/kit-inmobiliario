@@ -22,8 +22,8 @@ function initHome(){
   if(pcs){
     pcs.innerHTML = !AGENTE.esDemo ? '' : (
       '<div class="plan-cta-row" style="margin-bottom:20px;">'
-      + '<button class="plan-cta" onclick="abrirPlanModal(\'Esencial\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Plan Esencial <span class="plan-cta-price">· Bs 250</span></div></button>'
-      + '<button class="plan-cta" onclick="abrirPlanModal(\'Profesional\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Plan Profesional <span class="plan-cta-price">· Bs 350</span></div></button>'
+      + '<button class="plan-cta" onclick="abrirPlanModal(\'Esencial\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Plan Esencial <span class="plan-cta-price">· USD 80</span></div></button>'
+      + '<button class="plan-cta" onclick="abrirPlanModal(\'Profesional\')"><div class="plan-cta-lbl">Ver y pagar</div><div class="plan-cta-name">Plan Profesional <span class="plan-cta-price">· USD 120</span></div></button>'
       + '</div>'
     );
   }
